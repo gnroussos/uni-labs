@@ -52,7 +52,7 @@ void main(int argc, char **argv)
 	if (flags_set) {
 		// Reset the flags to FALSE
 		count_lines = FALSE;
-		count_words = FALSE;
+		count_words = FALSE; 
 		count_chars = FALSE;
 
 		// If it's a flag
