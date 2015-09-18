@@ -3,7 +3,7 @@
 2013 lab asingments or exam mostly in C 
 
 #lab3
-// Accepts a number of text files & flags from the command line 
+// Accepts a number of text files & flags from the command line </br>
 // & sums the lines, words, characters of each file & total
 
 #lab10
