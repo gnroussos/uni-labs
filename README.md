@@ -1,6 +1,6 @@
 # General
 
-2013 lab asingments or exam mostly in C 
+2013 lab asingments or exam (mostly) in C 
 
 #lab3
 // Accepts a number of text files & flags from the command line </br>
