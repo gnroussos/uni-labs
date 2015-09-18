@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+# define TRUE 1
+#define FALSE 0 
+
+#define NEWSIZE 2
+
+typedef struct dynArrStruct
+{
+    char *location;
+    int length;
+    int currSize;
+} dynArr;
+
+void init (dynArr* stack)
+{
+    stack->location = (char *) malloc (sizeof(char) * NEWSIZE);
+    stack->length = NEWSIZE;
+    stack->currSize = 0;
+}
+
+int isFull (dynArr* stack) /* note returns a boolean value */
+{
+    if ( stack->currSize >= stack->length)
+        return TRUE;   
+    else
+        return FALSE;
+}
+
+int isEmpty (dynArr* stack) /* note returns a boolean value */
+{
+    if (stack->currSize == 0)
+        return TRUE;   
+    else
+        return FALSE;
+    
+}
+void push (dynArr* stack,char val)
+{
+    char *temp;
+    
+     if (isFull(stack)==TRUE)
+    {
+           temp = (char*) malloc(sizeof(char)*(stack->length + NEWSIZE));
+         
+           int i;
+           for (i=0; i<stack->length; i++)
+               temp [i]= stack->location[i];   
+           
+           free (stack->location);
+           
+           stack->location= temp;
+           stack->length+=NEWSIZE;
+                  
+   }
+   stack->location[stack->currSize]= val;
+   stack->currSize++;   
+ }
+
+void pop (dynArr* stack)
+{
+     if (isEmpty(stack) == TRUE)
+         printf ("Stack is Empty.");
+     else
+         stack->currSize--;
+ }
+
+int main(int argc, char *argv[])
+{
+    
+dynArr expStack;
+
+char input[300];
+int debugMode = FALSE;
+  
+  if (*argv=="-d")
+     debugMode=TRUE;
+
+  init (&expStack);  
+  
+  printf("enter expression\n");
+  
+  gets(input);
+  
+  int i;
+  
+  for (i=0; input[i]!='\0'; i++)
+  {
+    if (input[i] == '<' || input[i] == '(' || input[i] == '[' || input[i] == '{')
+        push(&expStack,input[i]);
+    else
+    {
+    if (input[i] == '>')                                    //symbols check start
+    { 
+		pop(&expStack);
+       if (expStack.location[expStack.currSize]=='<')
+         printf("balanced\n");
+       else 
+         printf("not balanced\n");
+    }                                                       //symbols check end
+} //end of else #1
+   }//for loop end
+     
+  if (isEmpty(&expStack))
+     printf("balanced\n");
+  else
+     printf("not balanced\n");
+  
+
+  system("PAUSE");	
+  return 0;
+}
