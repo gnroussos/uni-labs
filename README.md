@@ -7,8 +7,8 @@
 // & sums the lines, words, characters of each file & total
 
 #lab8
-// dynamic stack which  checks balanced/imbalanced expression
-## foo
+// dynamic stack which checks balanced/imbalanced expressions
+
 #lab10
 // classic algorithms </br>
 //factorial(n), Fibonacci(n), isPrime(n), gcd(m, n), exponential(m,n)</br>
