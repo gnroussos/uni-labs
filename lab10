@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define FALSE 0
-#define TRUE 1
+#define TRUE 1 
 
 // A macro to print debug messages only if debug mode is TRUE
 // This macro behaves like a printf() function
