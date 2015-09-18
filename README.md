@@ -11,14 +11,14 @@
 
 #lab10
 // classic algorithms </br>
-//factorial(n), Fibonacci(n), isPrime(n), gcd(m, n), exponential(m,n)</br>
+// factorial(n), Fibonacci(n), isPrime(n), gcd(m, n), exponential(m,n)</br>
 
 #lab11
 // linked list & operations
 
 #lab12
 // Trees & operations </br>
-//in-order, pre-order, post-order
+// in-order, pre-order, post-order
 
 #lab14
 // various sorting algorithms</br>
