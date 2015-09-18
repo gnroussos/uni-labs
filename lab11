@@ -1,0 +1,233 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define TRUE 1
+#define FALSE 0
+
+typedef struct linknode 
+{
+	int data;
+	struct linknode *next;
+} node; 
+
+node *head = NULL;
+node *end =  NULL;
+
+// this initialises a node, allocates memory for the node, and returns   
+// a pointer to the new node. Must pass it the node details
+node *initnode(int num)
+{
+   node *ptr;
+   ptr = (node *) malloc(sizeof(node));
+   
+   if( ptr == NULL )                       
+       return NULL;							
+   else 
+   {                                  
+       ptr->data = num;                       
+       return ptr;                         
+   }
+}
+
+// this prints the details of a node
+void printnode(node *ptr )
+{
+   printf("num:%d\n",ptr->data);
+}
+
+// pass it 'head', then it prints out the entire list, by cycling through 
+// each node and calling 'printnode' to print each node found             
+void printlist(node *ptr)
+{
+   while(ptr != NULL )          
+   {
+      printnode( ptr );         
+      ptr = ptr->next;          
+   }
+}
+
+// this adds a node to the end of the list. You must allocate a node and  
+// then pass its address to this function                                 
+void add(node *newnode )  
+{
+   if( head == NULL )			// if there are no nodes in list, then         
+       head = newnode;			// set head to this new node                   
+   end->next = newnode;			//link in the new node to the end of the list
+   newnode->next = NULL;		//set next field to signify the end of list   
+   end = newnode;				//adjust end to point to the last node        
+}
+
+// search the list and return a pointer to the found node    
+// if you pass the pointer as 'head', it searches from the start of the list 
+node *search(node *ptr, int num)
+{
+    while(ptr->data != num ) 
+	{ 
+       ptr = ptr->next;                          
+       if( ptr == NULL )                         
+          break;                                 
+    }
+    return ptr;                                  
+}                                                
+
+// deletes the specified node pointed 
+void deletenode( node *ptr)
+{
+   node *temp, *prev;
+   temp = ptr;								// node to be deleted 
+   prev = head;								// start of the list, will cycle to node before temp    
+
+   if( temp == prev ) 
+   {										//delete first node  
+       head = head->next;					//moves head to next node     
+       if( end == temp )					//is it end, only one node?   
+          end = end->next;					//adjust end as well          
+       free( temp );						// free space occupied by node 
+   }
+   else 
+   {										//if not the first node, then 
+       while( prev->next != temp ) 
+	   {									// move prev to the node before
+           prev = prev->next;				// the one to be deleted       
+       }
+       prev->next = temp->next;				//link previous node to next  
+       if( end == temp )					// if this was the end node,   
+           end = prev;						// then reset the end pointer  
+       free( temp );						// free space occupied by node 
+   }
+}
+
+//inserts a new node align node 
+// pass it the address of the new node to be inserted
+void insertnode(node *newnode)
+{
+   node *temp, *prev;						// similar to deletenode      */
+
+   if( head == NULL ) 
+   {                    
+       head = newnode;                          
+       end = newnode;
+       head->next = NULL;                   
+       return;                              
+   }
+
+   temp = head;                             //start at beginning of list 
+											// whilst curredate < newdate to be inserted then 
+   while( temp->data < newnode->data)
+   {
+          temp = temp->next;                
+          if( temp == NULL )               
+              break;
+   }
+
+// we are the point to insert, we need previous node before we insert  
+// first check to see if its inserting before the first node       
+   if( temp == head ) 
+   {
+      newnode->next = head;					// link next field to original list   
+      head = newnode;						// head adjusted to new node          
+   }
+   else 
+   {										//not the first node
+      prev = head;							//start of the list, will cycle to node before temp 
+      while( prev->next != temp ) 
+	  {
+          prev = prev->next;
+      }
+      prev->next = newnode;					//insert node between prev and next  
+      newnode->next = temp;
+      if( end == prev )						// if inserted at the  end of the list the adjust end
+         end = newnode;							
+   }
+}
+
+// this deletes all nodes from the place specified by ptr                 
+// if you pass it head, it will free up entire list                       
+void deletelist( node *ptr )
+{
+   node *temp;
+
+   if( head == NULL ) 
+	   return;   
+
+   if( ptr == head ) 
+   {						
+       head = NULL;         
+       end = NULL;          
+   }
+   else 
+   {
+       temp = head;							// if its not the entire list, readjust end  
+       while( temp->next != ptr )			// locate previous node to ptr  
+           temp = temp->next;
+       end = temp;							// set end to node before ptr   
+   }
+
+   while( ptr != NULL ) 
+   {										// whilst there are still nodes to delete     */
+      temp = ptr->next;						/* record address of next node                */
+      free( ptr );							
+      ptr = temp;							/* point to next node to be deleted           */
+   }
+}
+
+void main()
+
+{
+	int num;
+	int ch;
+	node *ptr=NULL;
+
+//   system("cls");
+
+   while( ch != 0) 
+   {
+      printf("1 i - add a number\n");
+      printf("2 d - delete a number\n");
+      printf("3 l - list numbers \n");
+      printf("4 c - search for a number\n");
+//      printf("5 insert a name \n");
+      printf("0 q quit\n");
+//      scanf("%d\n",&ch);
+      switch( ch )
+      {
+/*          case 1:									// add a name to end of list 
+                   printf("Enter integer:");
+                   scanf("%d",&num);
+                   ptr = initnode(num);
+                   add(ptr);
+                   break;
+*/
+				   case 2:									// delete a name 
+                   printf("Enter integer:");
+                   scanf("%d",&num);
+                   ptr = search(head,num);
+                   if( ptr ==NULL ) 
+                       printf("Integer %d not found\n", num);
+                   else
+                      deletenode( ptr );
+                   break;
+
+          case 3:									//list all nodes 
+                   printlist(head);
+                   break;
+
+          case 4:									// search and print name 
+                   printf("Enter integer:");
+                   scanf("%d", &num);
+                   ptr = search(head,num);
+                   if( ptr ==NULL ) 
+                       printf("Integer %d not found\n", num);
+                   else
+                      printnode( ptr );
+                   break;
+          case 1:									// insert a name in list 
+                   printf("Enter integer;");
+                   scanf("%d", &num);
+                   ptr = initnode(num);
+                   insertnode(ptr);
+                   break;
+      }
+   }
+   deletelist(head);
+}
